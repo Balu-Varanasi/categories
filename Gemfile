@@ -26,11 +26,6 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
-group :development, :test do
-  gem 'hirb'
-  gem 'pry'
-end
-
 group :development do
   gem 'web-console', '~> 2.0'
   gem 'spring'
@@ -38,7 +33,9 @@ group :development do
   gem 'factory_girl_rails'
 end
 
-group :test do
+group :development, :test do
+  gem 'hirb'
+  gem 'pry'
   gem 'faker'
   gem 'capybara'
   gem 'guard-rspec', require: false

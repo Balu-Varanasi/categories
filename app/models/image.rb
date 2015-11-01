@@ -10,6 +10,7 @@ class Image < ActiveRecord::Base
                     url: '/uploads/images/:id/:style/:basename.:extension',
                     path: ':rails_root/public/uploads/images/:id/:style/:basename.:extension'
 
+  validates_presence_of :parent
   validates_attachment_presence :image
   validates_attachment_content_type :image, content_type: ['image/jpeg', 'image/png']
 end
