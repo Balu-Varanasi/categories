@@ -1,0 +1,34 @@
+= form_for @image, html: { class: "form form-horizontal image" } do |f|
+  .form-group
+    = f.label :parent_id, :class => 'control-label'
+    .controls
+      = f.text_field :parent_id, :class => 'form-control'
+    = error_span(@image[:parent_id])
+  .form-group
+    = f.label :parent_type, :class => 'control-label'
+    .controls
+      = f.text_field :parent_type, :class => 'form-control'
+    = error_span(@image[:parent_type])
+  .form-group
+    = f.label :image_file_name, :class => 'control-label'
+    .controls
+      = f.text_field :image_file_name, :class => 'form-control'
+    = error_span(@image[:image_file_name])
+  .form-group
+    = f.label :image_content_type, :class => 'control-label'
+    .controls
+      = f.text_field :image_content_type, :class => 'form-control'
+    = error_span(@image[:image_content_type])
+  .form-group
+    = f.label :image_file_size, :class => 'control-label'
+    .controls
+      = f.text_field :image_file_size, :class => 'form-control'
+    = error_span(@image[:image_file_size])
+  .form-group
+    = f.label :image_updated_at, :class => 'control-label'
+    .controls
+      = f.text_field :image_updated_at, :class => 'form-control'
+    = error_span(@image[:image_updated_at])
+  = f.submit nil, :class => 'btn btn-primary'
+  '
+  = link_to t('.cancel', :default => t("helpers.links.cancel")), images_path, :class => 'btn'

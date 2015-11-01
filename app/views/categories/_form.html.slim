@@ -1,0 +1,37 @@
+= form_for @category, html: { class: "form form-horizontal category", multipart: true } do |f|
+  - if @category.errors.any?
+    #error_expl.panel.panel-danger
+      .panel-heading
+        h3.panel-title
+          = pluralize(@category.errors.count, "error")
+          |  prohibited this category from being saved:
+      .panel-body
+        ul
+          - @category.errors.full_messages.each do |msg|
+            li
+              = msg
+  .form-group
+    = f.label :name, :class => 'control-label'
+    .controls
+      = f.text_field :name, :class => 'form-control'
+    = error_span(@category[:name])
+  .form-group
+    = f.label :parent_id, :class => 'control-label'
+    .controls
+    = f.select :parent_id, Category.all.collect { |c| [c.name, c.id] }, { include_blank: true }, {:class => 'form-control'}
+
+  .form-group
+    = f.label :products, :class => 'control-label'
+    .controls
+      = f.fields_for :products do |product|
+        - render 'product_fields', f: product
+      .links
+        = link_to_add_association 'add product', f, :products, :class => 'btn btn-default btn-xs'
+  .form-group
+    = f.label :images, :class => 'control-label'
+    .controls
+      = file_field_tag 'images[]', type: :file, multiple: true
+    = error_span(@category[:parent_id])
+  = f.submit nil, :class => 'btn btn-primary'
+  '
+  = link_to t('.cancel', :default => t("helpers.links.cancel")), categories_path, :class => 'btn'

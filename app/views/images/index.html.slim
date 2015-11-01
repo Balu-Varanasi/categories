@@ -1,0 +1,33 @@
+- model_class = Image
+div class="page-header"
+  h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
+table class="table table-striped"
+  thead
+    tr
+      th= model_class.human_attribute_name(:id)
+      th= model_class.human_attribute_name(:parent_id)
+      th= model_class.human_attribute_name(:parent_type)
+      th= model_class.human_attribute_name(:image_file_name)
+      th= model_class.human_attribute_name(:image_content_type)
+      th= model_class.human_attribute_name(:image_file_size)
+      th= model_class.human_attribute_name(:image_updated_at)
+      th= model_class.human_attribute_name(:created_at)
+      th=t '.actions', :default => t("helpers.actions")
+  tbody
+    - @images.each do |image|
+      tr
+        td= link_to image.id, image_path(image)
+        td= image.parent_id
+        td= image.parent_type
+        td= image.image_file_name
+        td= image.image_content_type
+        td= image.image_file_size
+        td= image.image_updated_at
+        td=l image.created_at
+        td
+          = link_to t('.edit', :default => t("helpers.links.edit")), edit_image_path(image), :class => 'btn btn-default btn-xs'
+          '
+          = link_to t('.destroy', :default => t("helpers.links.destroy")), image_path(image), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs btn-danger'
+
+= link_to t('.new', :default => t("helpers.links.new")), new_image_path, :class => 'btn btn-primary'
+
