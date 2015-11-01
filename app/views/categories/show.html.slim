@@ -9,7 +9,31 @@ p
 p
   strong= model_class.human_attribute_name(:parent_id) + ':'
   br
-  = @category.parent_id
+  - if @category.parent.present?
+    strong= @category.class.human_attribute_name(:id) + ':'
+    | &nbsp;
+    = link_to(@category.parent.id, category_path(@category.parent))
+    br
+    strong= @category.parent.class.human_attribute_name(:name) + ':'
+    | &nbsp;
+    = @category.parent.name
+    hr
+
+- unless @category.sub_categories.empty?
+  p
+    strong= model_class.human_attribute_name(:sub_categories) + ':'
+    ul
+      - @category.sub_categories.each do |sub_category|
+        li
+          strong= sub_category.class.human_attribute_name(:id) + ':'
+          | &nbsp;
+          = link_to(sub_category.id, category_path(sub_category))
+          br
+          strong= sub_category.class.human_attribute_name(:name) + ':'
+          | &nbsp;
+          = sub_category.name
+          hr
+
 - unless @category.products.empty?
   p
     strong= model_class.human_attribute_name(:products) + ':'
