@@ -10,14 +10,21 @@ FactoryGirl.define do
     end
 
     trait :with_images do
-      after(:build) do |category|
-        create_list(:image, 2, parent: category)
+      ignore do
+        number_of_images 3
+      end
+
+      after(:create) do |category, evaluator|
+        create_list(:image, evaluator.number_of_images, parent: category)
       end
     end
 
     trait :with_sub_categories do
-      after(:build) do |category|
-        create_list(:category, 2, parent_id: category.id)
+      ignore do
+        number_of_sub_categories 2
+      end
+      after(:create) do |category, evaluator|
+        create_list(:category, evaluator.number_of_sub_categories, parent_id: category.id)
       end
     end
   end

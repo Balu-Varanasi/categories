@@ -4,8 +4,12 @@ FactoryGirl.define do
   end
 
   trait :with_images do
-    after(:build) do |product|
-      create_list(:image, 2, parent: product)
+    ignore do
+      number_of_images 3
+    end
+
+    after(:create) do |product, evaluator|
+      create_list(:image, evaluator.number_of_images, parent: product)
     end
   end
 end
