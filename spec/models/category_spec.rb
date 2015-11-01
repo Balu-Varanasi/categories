@@ -10,6 +10,10 @@ RSpec.describe Category, type: :model do
     it 'belongs to string class' do
       expect(category.name.class).to eq(String)
     end
+
+    it 'is invalid without name' do
+      FactoryGirl.build(:category, name: nil).should_not be_valid
+    end
   end
 
   context ':images' do
@@ -39,6 +43,21 @@ RSpec.describe Category, type: :model do
         :with_sub_categories,
         number_of_sub_categories: 3)
       expect(category.sub_categories.count).to eq(3)
+    end
+  end
+
+  context ':products' do
+    it 'create records with zero products' do
+      category = FactoryGirl.create(:category)
+      expect(category.products.count).to eq(0)
+    end
+
+    it 'create records with given number of products' do
+      category = FactoryGirl.create(
+        :category,
+        :with_products,
+        number_of_products: 4)
+      expect(category.products.count).to eq(4)
     end
   end
 

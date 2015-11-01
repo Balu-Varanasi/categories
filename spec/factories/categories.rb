@@ -27,5 +27,14 @@ FactoryGirl.define do
         create_list(:category, evaluator.number_of_sub_categories, parent_id: category.id)
       end
     end
+
+    trait :with_products do
+      ignore do
+        number_of_products 4
+      end
+      after(:create) do |category, evaluator|
+        create_list(:product, evaluator.number_of_products, category: category)
+      end
+    end
   end
 end

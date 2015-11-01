@@ -7,10 +7,18 @@ class CategoriesController < ApplicationController
 
   def index
     @categories = Category.all
+    respond_to do |format|
+      format.html { render :index }
+      format.json { render json: @categories }
+    end
   end
 
   def show
     @images = @category.images
+    respond_to do |format|
+      format.html { render :show }
+      format.json { render json: @category }
+    end
   end
 
   def new
@@ -22,14 +30,13 @@ class CategoriesController < ApplicationController
 
   def create
     @category = Category.new(category_params)
-
     respond_to do |format|
       if @category.save
         params[:images].each do |image|
           @category.images.create(image: image)
-        end if params[:images]
+        end if params[:images].present?
         format.html { redirect_to @category, notice: 'Category was successfully created.' }
-        format.json { render :show, status: :created, location: @category }
+        format.json { render json: @category, status: :created }
       else
         format.html { render :new }
         format.json { render json: @category.errors, status: :unprocessable_entity }
@@ -44,7 +51,7 @@ class CategoriesController < ApplicationController
           @category.images.create(image: image)
         end if params[:images]
         format.html { redirect_to @category, notice: 'Category was successfully updated.' }
-        format.json { render :show, status: :created, location: @category }
+        format.json { render json: @category, status: :created }
       else
         format.html { render :edit }
         format.json { render json: @category.errors, status: :unprocessable_entity }
